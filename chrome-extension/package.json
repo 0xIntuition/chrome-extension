@@ -1,6 +1,6 @@
 {
-  "name": "chrome-extension",
-  "version": "0.3.5",
+  "name": "trustbar",
+  "version": "0.1.0",
   "description": "chrome extension - core settings",
   "type": "module",
   "scripts": {

@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react-vite",
-  "version": "0.3.5",
-  "description": "chrome extension boilerplate",
+  "name": "trustbar",
+  "version": "0.1.0",
+  "description": "Building a Safer Web, Together",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite.git"
+    "url": "https://github.com/0xIntuition/trustbar.git"
   },
   "type": "module",
   "scripts": {
