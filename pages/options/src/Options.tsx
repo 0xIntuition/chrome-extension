@@ -33,7 +33,7 @@ const Options = () => {
       }
     };
     getAccount();
-  }, []);
+  }, [client]);
 
   return (
     <div className={`App ${isLight ? 'bg-slate-50 text-gray-900' : 'bg-gray-800 text-gray-100'}`}>
