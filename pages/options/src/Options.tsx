@@ -1,26 +1,46 @@
 import '@src/Options.css';
+import React, { useEffect, useState } from 'react';
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { exampleThemeStorage } from '@extension/storage';
 import { Button } from '@extension/ui';
+import { useMultiVault, base } from '@extension/shared';
 
 const Options = () => {
+  const [account, setAccount] = useState<string | undefined>(undefined);
+  const [chain, setChain] = useState<string | undefined>(undefined);
   const theme = useStorage(exampleThemeStorage);
+  const { client } = useMultiVault();
   const isLight = theme === 'light';
-  const logo = isLight ? 'options/logo_horizontal.svg' : 'options/logo_horizontal_dark.svg';
-  const goGithubSite = () =>
-    chrome.tabs.create({ url: 'https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite' });
+
+  const handleLogin = async () => {
+    const accounts = await client?.requestAddresses();
+    if (accounts) {
+      setAccount(accounts[0]);
+    }
+    await client?.switchChain({ id: base.id });
+  };
+
+  useEffect(() => {
+    const getAccount = async () => {
+      const accounts = await client?.getAddresses();
+      if (accounts) {
+        setAccount(accounts[0]);
+      }
+    };
+    getAccount();
+  }, [client]);
 
   return (
     <div className={`App ${isLight ? 'bg-slate-50 text-gray-900' : 'bg-gray-800 text-gray-100'}`}>
-      <button onClick={goGithubSite}>
-        <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
-      </button>
-      <p>
-        Edit <code>pages/options/src/Options.tsx</code>
-      </p>
       <Button className="mt-4" onClick={exampleThemeStorage.toggle} theme={theme}>
         Toggle theme
       </Button>
+      {account && <div>Account: {account}</div>}
+      {!account && (
+        <Button className="mt-4" onClick={handleLogin} theme={theme}>
+          Login
+        </Button>
+      )}
     </div>
   );
 };

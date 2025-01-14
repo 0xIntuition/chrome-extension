@@ -3,15 +3,16 @@ import { watchRebuildPlugin } from '@extension/hmr';
 import react from '@vitejs/plugin-react-swc';
 import deepmerge from 'deepmerge';
 import { isDev, isProduction } from './env.mjs';
+import inject from '@rollup/plugin-inject'
 
 export const watchOption = isDev ? {
   buildDelay: 100,
   chokidar: {
-    ignored:[
+    ignored: [
       /\/packages\/.*\.(ts|tsx|map)$/,
     ]
   }
-}: undefined;
+} : undefined;
 
 /**
  * @typedef {import('vite').UserConfig} UserConfig
@@ -32,6 +33,10 @@ export function withPageConfig(config) {
           watch: watchOption,
           rollupOptions: {
             external: ['chrome'],
+            plugins: [inject({
+              Buffer: ['buffer/', 'Buffer'],
+              process: 'process/browser',
+            })],
           },
         },
         define: {

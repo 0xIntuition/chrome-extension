@@ -23,5 +23,11 @@
   "devDependencies": {
     "@extension/storage": "workspace:*",
     "@extension/tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@0xintuition/protocol": "^0.1.3",
+    "@tanstack/react-query": "^5.64.0",
+    "metamask-extension-provider": "^5.0.0",
+    "viem": "^2.22.8"
   }
 }
