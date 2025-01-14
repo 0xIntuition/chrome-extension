@@ -1,10 +1,11 @@
 import '@src/SidePanel.css';
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
-import { exampleThemeStorage } from '@extension/storage';
+import { exampleThemeStorage, currentAccountStorage } from '@extension/storage';
 import type { ComponentPropsWithoutRef } from 'react';
 
 const SidePanel = () => {
   const theme = useStorage(exampleThemeStorage);
+  const account = useStorage(currentAccountStorage);
   const isLight = theme === 'light';
   const logo = isLight ? 'side-panel/logo_vertical.svg' : 'side-panel/logo_vertical_dark.svg';
   const goGithubSite = () =>
@@ -20,6 +21,8 @@ const SidePanel = () => {
           Edit <code>pages/side-panel/src/SidePanel.tsx</code>
         </p>
         <ToggleButton>Toggle theme</ToggleButton>
+
+        {account && <div>Account: {account}</div>}
       </header>
     </div>
   );
