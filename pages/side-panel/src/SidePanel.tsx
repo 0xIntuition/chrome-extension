@@ -1,48 +1,39 @@
 import '@src/SidePanel.css';
-import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
+import { useStorage, withErrorBoundary, withSuspense, useQuery, searchAtomsByUriQuery } from '@extension/shared';
 import { exampleThemeStorage, currentAccountStorage, currentUrlStorage } from '@extension/storage';
-import type { ComponentPropsWithoutRef } from 'react';
 
 const SidePanel = () => {
   const theme = useStorage(exampleThemeStorage);
   const account = useStorage(currentAccountStorage);
   const currentUrl = useStorage(currentUrlStorage);
+
+  const { data, error, refetch } = useQuery(searchAtomsByUriQuery, {
+    variables: {
+      uri: currentUrl,
+      address: account?.toLocaleLowerCase() || '',
+    },
+    skip: !currentUrl,
+  });
+
   const isLight = theme === 'light';
-  const logo = isLight ? 'side-panel/logo_vertical.svg' : 'side-panel/logo_vertical_dark.svg';
-  const goGithubSite = () =>
-    chrome.tabs.create({ url: 'https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite' });
 
   return (
-    <div className={`App ${isLight ? 'bg-slate-50' : 'bg-gray-800'}`}>
-      <header className={`App-header ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
-        <button onClick={goGithubSite}>
-          <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
-        </button>
-        <p>
-          Edit <code>pages/side-panel/src/SidePanel.tsx</code>
-        </p>
-        <ToggleButton>Toggle theme</ToggleButton>
-
+    <div className={`p-4 ${isLight ? 'bg-slate-50 text-black' : 'bg-gray-800 text-white'}`}>
+      <div>
+        <h1>Intuition</h1>
+      </div>
+      <div>
         {account && <div>Account: {account}</div>}
         {currentUrl && <div>Current URL: {currentUrl}</div>}
-      </header>
+      </div>
+      {data &&
+        data.atoms.map(atom => (
+          <div key={atom.id}>
+            <h2>{atom.label}</h2>
+            {atom.image && <img src={atom.image} style={{ width: '100px', height: '100px' }} />}
+          </div>
+        ))}
     </div>
-  );
-};
-
-const ToggleButton = (props: ComponentPropsWithoutRef<'button'>) => {
-  const theme = useStorage(exampleThemeStorage);
-  return (
-    <button
-      className={
-        props.className +
-        ' ' +
-        'font-bold mt-4 py-1 px-4 rounded shadow hover:scale-105 ' +
-        (theme === 'light' ? 'bg-white text-black' : 'bg-black text-white')
-      }
-      onClick={exampleThemeStorage.toggle}>
-      {props.children}
-    </button>
   );
 };
 
