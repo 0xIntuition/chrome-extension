@@ -5,10 +5,12 @@ exampleThemeStorage.get().then(theme => {
   console.log('theme', theme);
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (tab.active && tab.url !== undefined) {
-    currentUrlStorage.set(tab.url);
-  }
+chrome.tabs.onActivated.addListener(activeInfo => {
+  chrome.tabs.get(activeInfo.tabId, tab => {
+    if (tab.url !== undefined) {
+      currentUrlStorage.set(tab.url);
+    }
+  });
 });
 
 console.log('background loaded');
