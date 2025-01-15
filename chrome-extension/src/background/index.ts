@@ -13,5 +13,10 @@ chrome.tabs.onActivated.addListener(activeInfo => {
   });
 });
 
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete' && tab.url !== undefined) {
+    currentUrlStorage.set(tab.url);
+  }
+});
 console.log('background loaded');
 console.log("Edit 'chrome-extension/src/background/index.ts' and save to reload.");
