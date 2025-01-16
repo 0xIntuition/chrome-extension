@@ -1,3 +1,3 @@
 export * from './exampleThemeStorage';
 export * from './currentAccountStorage';
-export * from './currentUrlStorage';
+export * from './currentTabStorage';

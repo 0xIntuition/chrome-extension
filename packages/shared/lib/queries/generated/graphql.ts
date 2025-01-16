@@ -7824,6 +7824,55 @@ export type PinThingMutation = {
   pinThing?: { __typename?: 'PinOutput'; uri?: string | null } | null;
 };
 
+export type ClaimsFromFollowingAboutSubjectQueryVariables = Exact<{
+  address: Scalars['String']['input'];
+  subjectId: Scalars['numeric']['input'];
+}>;
+
+export type ClaimsFromFollowingAboutSubjectQuery = {
+  __typename?: 'query_root';
+  claims_from_following: Array<{
+    __typename?: 'claims';
+    shares: any;
+    counter_shares: any;
+    triple: {
+      __typename?: 'triples';
+      id: any;
+      vault_id: any;
+      counter_vault_id: any;
+      subject: { __typename?: 'atoms'; emoji?: string | null; label?: string | null; image?: string | null; id: any };
+      predicate: { __typename?: 'atoms'; emoji?: string | null; label?: string | null; image?: string | null; id: any };
+      object: { __typename?: 'atoms'; emoji?: string | null; label?: string | null; image?: string | null; id: any };
+      counter_vault?: {
+        __typename?: 'vaults';
+        id: any;
+        position_count: number;
+        total_shares: any;
+        current_share_price: any;
+        myPosition: Array<{ __typename?: 'positions'; shares: any; account_id: string }>;
+      } | null;
+      vault?: {
+        __typename?: 'vaults';
+        id: any;
+        position_count: number;
+        total_shares: any;
+        current_share_price: any;
+        myPosition: Array<{ __typename?: 'positions'; shares: any; account_id: string }>;
+      } | null;
+    };
+    account?: { __typename?: 'accounts'; id: string; label: string } | null;
+  }>;
+};
+
+export type SearchAtomsQueryVariables = Exact<{
+  label: Scalars['String']['input'];
+}>;
+
+export type SearchAtomsQuery = {
+  __typename?: 'query_root';
+  atoms: Array<{ __typename?: 'atoms'; id: any; image?: string | null; label?: string | null }>;
+};
+
 export const SearchAtomsByUriDocument = {
   kind: 'Document',
   definitions: [
@@ -8405,3 +8454,347 @@ export const PinThingDocument = {
     },
   ],
 } as unknown as DocumentNode<PinThingMutation, PinThingMutationVariables>;
+export const ClaimsFromFollowingAboutSubjectDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'ClaimsFromFollowingAboutSubject' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'subjectId' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'numeric' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'claims_from_following' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'args' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'address' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'subject_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'subjectId' } },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'shares' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'counter_shares' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'triple' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'vault_id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'counter_vault_id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'subject' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'emoji' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'predicate' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'emoji' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'object' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'emoji' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'counter_vault' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'position_count' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'total_shares' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'current_share_price' } },
+                            {
+                              kind: 'Field',
+                              alias: { kind: 'Name', value: 'myPosition' },
+                              name: { kind: 'Name', value: 'positions' },
+                              arguments: [
+                                {
+                                  kind: 'Argument',
+                                  name: { kind: 'Name', value: 'limit' },
+                                  value: { kind: 'IntValue', value: '1' },
+                                },
+                                {
+                                  kind: 'Argument',
+                                  name: { kind: 'Name', value: 'where' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'account_id' },
+                                        value: {
+                                          kind: 'ObjectValue',
+                                          fields: [
+                                            {
+                                              kind: 'ObjectField',
+                                              name: { kind: 'Name', value: '_eq' },
+                                              value: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+                                            },
+                                          ],
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'shares' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'account_id' } },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'vault' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'position_count' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'total_shares' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'current_share_price' } },
+                            {
+                              kind: 'Field',
+                              alias: { kind: 'Name', value: 'myPosition' },
+                              name: { kind: 'Name', value: 'positions' },
+                              arguments: [
+                                {
+                                  kind: 'Argument',
+                                  name: { kind: 'Name', value: 'limit' },
+                                  value: { kind: 'IntValue', value: '1' },
+                                },
+                                {
+                                  kind: 'Argument',
+                                  name: { kind: 'Name', value: 'where' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'account_id' },
+                                        value: {
+                                          kind: 'ObjectValue',
+                                          fields: [
+                                            {
+                                              kind: 'ObjectField',
+                                              name: { kind: 'Name', value: '_eq' },
+                                              value: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+                                            },
+                                          ],
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'shares' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'account_id' } },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'account' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ClaimsFromFollowingAboutSubjectQuery, ClaimsFromFollowingAboutSubjectQueryVariables>;
+export const SearchAtomsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'SearchAtoms' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'label' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'atoms' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block_timestamp' },
+                      value: { kind: 'EnumValue', value: 'desc' },
+                    },
+                  ],
+                },
+              },
+              { kind: 'Argument', name: { kind: 'Name', value: 'limit' }, value: { kind: 'IntValue', value: '30' } },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'type' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_in' },
+                            value: {
+                              kind: 'ListValue',
+                              values: [
+                                { kind: 'StringValue', value: 'Thing', block: false },
+                                { kind: 'StringValue', value: 'Person', block: false },
+                                { kind: 'StringValue', value: 'Organization', block: false },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'label' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_ilike' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'label' } },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SearchAtomsQuery, SearchAtomsQueryVariables>;

@@ -112,3 +112,73 @@ export const pinThingMutation = gql(/* GraphQL */ `
     }
   }
 `);
+
+export const getClaimsFromFollowingAboutSubject = gql(/* GraphQL */ `
+  query ClaimsFromFollowingAboutSubject($address: String!, $subjectId: numeric!) {
+    claims_from_following(args: { address: $address }, where: { subject_id: { _eq: $subjectId } }) {
+      shares
+      counter_shares
+      triple {
+        id
+        vault_id
+        counter_vault_id
+        subject {
+          emoji
+          label
+          image
+          id
+        }
+        predicate {
+          emoji
+          label
+          image
+          id
+        }
+        object {
+          emoji
+          label
+          image
+          id
+        }
+        counter_vault {
+          id
+          position_count
+          total_shares
+          current_share_price
+          myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {
+            shares
+            account_id
+          }
+        }
+        vault {
+          id
+          position_count
+          total_shares
+          current_share_price
+          myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {
+            shares
+            account_id
+          }
+        }
+      }
+      account {
+        id
+        label
+      }
+    }
+  }
+`);
+
+export const searchAtomsQuery = gql(/* GraphQL */ `
+  query SearchAtoms($label: String!) {
+    atoms(
+      order_by: { block_timestamp: desc }
+      limit: 30
+      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }
+    ) {
+      id
+      image
+      label
+    }
+  }
+`);

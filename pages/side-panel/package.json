@@ -19,7 +19,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@0xintuition/1ui": "^0.1.0",
+    "@extension/ui": "workspace:*",
     "@extension/shared": "workspace:*",
     "@extension/storage": "workspace:*"
   },

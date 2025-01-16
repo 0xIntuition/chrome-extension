@@ -17,9 +17,9 @@ const Options = () => {
       currentAccountStorage.set(accounts[0]);
     } else {
       console.log('No account');
-      currentAccountStorage.set(null);
+      currentAccountStorage.set(undefined);
     }
-    await client?.switchChain({ id: base.id });
+    // await client?.switchChain({ id: base.id });
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Options = () => {
         currentAccountStorage.set(accounts[0]);
       } else {
         console.log('No account');
-        currentAccountStorage.set(null);
+        currentAccountStorage.set(undefined);
       }
     };
     getAccount();
