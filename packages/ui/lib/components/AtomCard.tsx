@@ -208,8 +208,8 @@ export const AtomCard: React.FC<AtomCardProps> = ({
   }
 
   return (
-    <div className="bg-slate-950 p-2">
-      <div className="flex flex-col p-4 bg-slate-900 rounded-lg">
+    <div className="bg-slate-700 p-2">
+      <div className="flex flex-col p-4 bg-slate-800 rounded-lg">
         <div className="flex items-center space-x-4 mb-3">
           {atom.image && <img src={atom.image} className="w-16 h-16 rounded-full object-cover object-center" />}
           <div>
@@ -242,10 +242,10 @@ export const AtomCard: React.FC<AtomCardProps> = ({
             <span className="pl-2">{numberOfRemainingPositions}</span>
           </button>
         </div>
-        <div className="flex flex-row flex-wrap gap-2 mt-3 space-x-1 border-t border-slate-800 pt-3">
+        <div className="flex flex-row flex-wrap gap-2 mt-3 space-x-1 border-t border-slate-600 pt-3">
           <button
             onClick={() => setShowGlobalClaims(!showGlobalClaims)}
-            className="flex items-center border border-slate-800 text-slate-100 hover:border-slate-700 hover:bg-slate-700 hover:text-slate-200 text-xs rounded-full space-x-2 px-2 h-7 bg-transparent">
+            className="flex items-center border border-slate-600 text-slate-100 hover:border-slate-700 hover:bg-slate-700 hover:text-slate-200 text-xs rounded-full space-x-2 px-2 h-7 bg-transparent">
             <span>{showGlobalClaims ? '🌐' : '👥'}</span>
           </button>
 
@@ -267,7 +267,7 @@ export const AtomCard: React.FC<AtomCardProps> = ({
             ))}
           <button
             onClick={() => setShowTagSearch(!showTagSearch)}
-            className="flex items-center border border-slate-800 text-slate-100 hover:border-slate-700 hover:bg-slate-700 hover:text-slate-200 text-xs rounded-full space-x-2 px-2 h-7 bg-transparent">
+            className="flex items-center border border-slate-600 text-slate-100 hover:border-slate-700 hover:bg-slate-700 hover:text-slate-200 text-xs rounded-full space-x-2 px-2 h-7 bg-transparent">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4 inline-block"
@@ -279,7 +279,7 @@ export const AtomCard: React.FC<AtomCardProps> = ({
           </button>
           {showTagSearch && <TagSearch onSelected={handleLocalTagSelected} atomId={atom.id} />}
           {selectedTag && (
-            <div className="flex items-center bg-sky-800 border-slate-800 border text-slate-100 hover:border-slate-700 hover:bg-slate-700 hover:text-slate-200 text-xs rounded-full space-x-2 px-2 h-7">
+            <div className="flex items-center bg-sky-800 border-slate-600 border text-slate-100 hover:border-slate-700 hover:bg-slate-700 hover:text-slate-200 text-xs rounded-full space-x-2 px-2 h-7">
               <Spinner />
               <span>{selectedTag.label}</span>
             </div>

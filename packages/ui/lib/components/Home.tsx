@@ -123,15 +123,6 @@ export const Home: React.FC = () => {
 
   return (
     <>
-      {!showAtomForm && (
-        <div className="flex justify-end items-center p-2">
-          <button
-            onClick={() => setShowAtomForm(true)}
-            className="p-1 px-4 bg-slate-800 rounded-full hover:bg-slate-600 text-xs">
-            Add
-          </button>
-        </div>
-      )}
       {data.atoms.map(atom => (
         <AtomCard
           key={atom.id}
@@ -144,6 +135,15 @@ export const Home: React.FC = () => {
           useClaimsFromFollowing={useClaimsFromFollowing}
         />
       ))}
+      {!showAtomForm && (
+        <div className="flex justify-end items-center p-2">
+          <button
+            onClick={() => setShowAtomForm(true)}
+            className="p-1 px-4 bg-slate-800 text-slate-300 rounded-full hover:bg-slate-600 text-xs">
+            Add
+          </button>
+        </div>
+      )}
     </>
   );
 };

@@ -72,8 +72,8 @@ export const AtomForm = () => {
   }
 
   return (
-    <div className="bg-slate-950 p-2">
-      <div className="flex flex-col p-4 bg-slate-900 rounded-lg">
+    <div className="bg-slate-700 p-2">
+      <div className="flex flex-col p-4 bg-slate-800 rounded-lg">
         <div className="flex items-center space-x-4 mb-3">
           {image && <img src={image} className="w-16 h-16 rounded-full object-cover object-center" />}
           <div>
