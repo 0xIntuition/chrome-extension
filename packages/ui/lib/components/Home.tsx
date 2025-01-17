@@ -35,6 +35,11 @@ export const Home: React.FC = () => {
   };
 
   const handleTagSelected = async (tag: any, atomId: number) => {
+    if (!currentAccount) {
+      // open options page
+      chrome.runtime.openOptionsPage();
+      return;
+    }
     console.log('tag selected', tag);
     setSelectedTag(tag);
     setShowTagSearch(false);
@@ -81,6 +86,11 @@ export const Home: React.FC = () => {
     );
   }
   const handleAtomClick = (atomId: number, myPosition: string | undefined) => {
+    if (!currentAccount) {
+      // open options page
+      chrome.runtime.openOptionsPage();
+      return;
+    }
     if (myPosition) {
       redeem(atomId, myPosition);
     } else {

@@ -59,6 +59,11 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch, claimsForCount,
   const totalPositionCount = (tag.vault?.position_count || 0) + (tag.counter_vault?.position_count || 0);
 
   const handleTagClick = (isCounterVault: boolean) => {
+    if (!account) {
+      // open options page
+      chrome.runtime.openOptionsPage();
+      return;
+    }
     if (myPosition) {
       setBgClass('bg-sky-800 border-slate-900');
       if (tag.vault?.id) {
