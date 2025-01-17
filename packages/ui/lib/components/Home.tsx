@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { parseEther, useQuery } from '@extension/shared';
-import { getClaimsFromFollowingAboutSubject, searchAtomsByUriQuery } from '@extension/shared';
+import { getClaimsFromFollowingAboutSubject, searchAtomsByUriQuery, base } from '@extension/shared';
 import { useMultiVault } from '@extension/shared';
 import { Spinner } from './Spinner.js';
 import { AtomForm } from './AtomForm.js';
 import { Atom, AtomCard } from './AtomCard.js';
-import { currentTabStorage, currentAccountStorage } from '@extension/storage';
+import { currentTabStorage, currentAccountStorage, currentChainStorage } from '@extension/storage';
 
 import { useStorage } from '@extension/shared';
 
 export const Home: React.FC = () => {
   const currentTab = useStorage(currentTabStorage);
   const currentAccount = useStorage(currentAccountStorage);
+  const currentChain = useStorage(currentChainStorage);
   const [showAtomForm, setShowAtomForm] = useState(false);
   const { multivault, client } = useMultiVault(currentAccount);
   const [showTagSearch, setShowTagSearch] = useState(false);
   const [selectedTag, setSelectedTag] = useState<any>(null);
 
-  const { data, error, refetch } = useQuery(searchAtomsByUriQuery, {
+  const { data, error, refetch, loading } = useQuery(searchAtomsByUriQuery, {
     variables: {
       uri: currentTab?.url || '',
       address: currentAccount?.toLocaleLowerCase() || '',
@@ -26,7 +27,11 @@ export const Home: React.FC = () => {
     fetchPolicy: 'cache-and-network',
   });
   const openAtom = (id: number) => {
-    chrome.tabs.create({ url: `https://i7n.app/a/${id}` });
+    const url =
+      currentChain === base.id
+        ? 'https://beta.portal.intuition.systems/app/identity'
+        : 'https://dev.portal.intuition.systems/app/identity';
+    chrome.tabs.create({ url: `${url}/${id}` });
   };
 
   const handleTagSelected = async (tag: any, atomId: number) => {
@@ -50,7 +55,7 @@ export const Home: React.FC = () => {
     setTimeout(() => {
       setSelectedTag(null);
       refetch();
-    }, 1000);
+    }, 2000);
   };
 
   const useClaimsFromFollowing = (address: string | undefined, subjectId: number) => {
@@ -91,7 +96,7 @@ export const Home: React.FC = () => {
 
       console.log(`Depositing for atom ${atomId} from account ${currentAccount}`);
 
-      const { hash } = await multivault.depositAtom(BigInt(atomId), parseEther('0.00042'));
+      const { hash } = await multivault.depositAtom(BigInt(atomId), parseEther('0.0042'));
       console.log(`Transaction hash: ${hash}`);
 
       // wait 1 second before refetching and updating the UI
@@ -116,7 +121,29 @@ export const Home: React.FC = () => {
   };
 
   if (!data?.atoms || data.atoms.length === 0 || showAtomForm) {
-    return <AtomForm />;
+    const handleRefetch = () => {
+      refetch();
+      setShowAtomForm(false);
+    };
+    return (
+      <>
+        <AtomForm refetch={handleRefetch} />
+        <div className="flex justify-end items-center p-2 space-x-2">
+          {showAtomForm && (
+            <button
+              onClick={() => setShowAtomForm(false)}
+              className="p-1 px-4 bg-slate-800 text-slate-300 rounded-full hover:bg-slate-600 text-sm">
+              Cancel
+            </button>
+          )}
+          <button
+            onClick={() => refetch()}
+            className="p-1 px-4 bg-slate-800 text-slate-300 rounded-full hover:bg-slate-600 text-sm">
+            {loading ? <Spinner /> : 'Refresh'}
+          </button>
+        </div>
+      </>
+    );
   }
   // const usd = data.chainLinkPrices[0].usd;
   const usd = 3302.34864192; // hardcoded for now:w
@@ -136,11 +163,16 @@ export const Home: React.FC = () => {
         />
       ))}
       {!showAtomForm && (
-        <div className="flex justify-end items-center p-2">
+        <div className="flex justify-end items-center p-2 space-x-2">
           <button
             onClick={() => setShowAtomForm(true)}
-            className="p-1 px-4 bg-slate-800 text-slate-300 rounded-full hover:bg-slate-600 text-xs">
+            className="p-1 px-4 bg-slate-800 text-slate-300 rounded-full hover:bg-slate-600 text-sm">
             Add
+          </button>
+          <button
+            onClick={() => refetch()}
+            className="p-1 px-4 bg-slate-800 text-slate-300 rounded-full hover:bg-slate-600 text-sm">
+            {loading ? <Spinner /> : 'Refresh'}
           </button>
         </div>
       )}

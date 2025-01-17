@@ -22,6 +22,8 @@ const documents = {
     types.ClaimsFromFollowingAboutSubjectDocument,
   '\n  query SearchAtoms($label: String!) {\n    atoms(\n      order_by: { block_timestamp: desc }\n      limit: 30\n      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }\n    ) {\n      id\n      image\n      label\n    }\n  }\n':
     types.SearchAtomsDocument,
+  '\n  query GetTransactionEvents($hash: bytea) {\n    events(where: { transaction_hash: { _eq: $hash } }) {\n      transaction_hash\n    }\n  }\n':
+    types.GetTransactionEventsDocument,
 };
 
 /**
@@ -62,6 +64,12 @@ export function gql(
 export function gql(
   source: '\n  query SearchAtoms($label: String!) {\n    atoms(\n      order_by: { block_timestamp: desc }\n      limit: 30\n      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }\n    ) {\n      id\n      image\n      label\n    }\n  }\n',
 ): (typeof documents)['\n  query SearchAtoms($label: String!) {\n    atoms(\n      order_by: { block_timestamp: desc }\n      limit: 30\n      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }\n    ) {\n      id\n      image\n      label\n    }\n  }\n'];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: '\n  query GetTransactionEvents($hash: bytea) {\n    events(where: { transaction_hash: { _eq: $hash } }) {\n      transaction_hash\n    }\n  }\n',
+): (typeof documents)['\n  query GetTransactionEvents($hash: bytea) {\n    events(where: { transaction_hash: { _eq: $hash } }) {\n      transaction_hash\n    }\n  }\n'];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

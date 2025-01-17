@@ -86,14 +86,18 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch, claimsForCount,
     setLoading(true);
     const tx = await multivault.redeemTriple(BigInt(vaultId), BigInt(amount));
     console.log(tx);
+    // wait 2 seconds
+    await new Promise(resolve => setTimeout(resolve, 2000));
     setLoading(false);
     refetch();
   };
 
   const depositTriple = async (vaultId: string) => {
     setLoading(true);
-    const tx = await multivault.depositTriple(BigInt(vaultId), parseEther('0.00042'));
+    const tx = await multivault.depositTriple(BigInt(vaultId), parseEther('0.0042'));
     console.log(tx);
+    // wait 2 seconds
+    await new Promise(resolve => setTimeout(resolve, 2000));
     setLoading(false);
     refetch();
   };

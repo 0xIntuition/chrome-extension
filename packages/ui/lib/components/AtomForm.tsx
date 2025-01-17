@@ -4,7 +4,7 @@ import { useMultiVault, useMutation, useStorage } from '@extension/shared';
 import { pinThingMutation } from '@extension/shared';
 import { currentTabStorage, currentAccountStorage } from '@extension/storage';
 
-export const AtomForm = () => {
+export const AtomForm = ({ refetch }: { refetch: () => void }) => {
   const currentAccount = useStorage(currentAccountStorage);
   const [progressMessage, setProgressMessage] = useState<string | undefined>(undefined);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
@@ -48,14 +48,16 @@ export const AtomForm = () => {
       const { hash } = await multivault.createAtom({
         uri: finalUri,
       });
-      setProgressMessage(undefined);
+
+      await new Promise(resolve => setTimeout(resolve, 8000));
       console.log(`Transaction hash: ${hash}`);
     } catch (error: any) {
       console.log('Error during deposit:', error.message);
       setErrorMessage(error.message);
-      setProgressMessage(undefined);
     }
+    setProgressMessage(undefined);
     setCreatingAtom(false);
+    refetch();
   }
 
   return (

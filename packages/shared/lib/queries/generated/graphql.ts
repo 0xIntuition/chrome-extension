@@ -7873,6 +7873,15 @@ export type SearchAtomsQuery = {
   atoms: Array<{ __typename?: 'atoms'; id: any; image?: string | null; label?: string | null }>;
 };
 
+export type GetTransactionEventsQueryVariables = Exact<{
+  hash?: InputMaybe<Scalars['bytea']['input']>;
+}>;
+
+export type GetTransactionEventsQuery = {
+  __typename?: 'query_root';
+  events: Array<{ __typename?: 'events'; transaction_hash: any }>;
+};
+
 export const SearchAtomsByUriDocument = {
   kind: 'Document',
   definitions: [
@@ -8798,3 +8807,58 @@ export const SearchAtomsDocument = {
     },
   ],
 } as unknown as DocumentNode<SearchAtomsQuery, SearchAtomsQueryVariables>;
+export const GetTransactionEventsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetTransactionEvents' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'bytea' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'events' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'transaction_hash' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'transaction_hash' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetTransactionEventsQuery, GetTransactionEventsQueryVariables>;
