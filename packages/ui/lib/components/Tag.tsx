@@ -35,7 +35,7 @@ interface TagProps {
 
 export const Tag: React.FC<TagProps> = ({ tag, account, refetch }) => {
   const { multivault } = useMultiVault(account);
-  const [bgClass, setBgClass] = useState('bg-transparent border-slate-800');
+  const [bgClass, setBgClass] = useState('bg-transparent border-slate-900');
   const [loading, setLoading] = useState(false);
   const myPosition = tag.vault?.myPosition[0]?.shares;
   const myCounterPosition = tag.counter_vault?.myPosition[0]?.shares;
@@ -52,7 +52,7 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch }) => {
 
   const handleTagClick = (isCounterVault: boolean) => {
     if (myPosition) {
-      setBgClass('bg-sky-800 border-slate-800');
+      setBgClass('bg-sky-800 border-slate-900');
       if (tag.vault?.id) {
         redeemTriple(tag.vault?.id, myPosition);
       }
@@ -67,7 +67,7 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch }) => {
         depositTriple(tag.counter_vault.id);
       }
     } else {
-      setBgClass('bg-sky-800 border-slate-800');
+      setBgClass('bg-sky-800 border-slate-900');
       if (tag.vault?.id) {
         depositTriple(tag.vault.id);
       }
@@ -92,9 +92,9 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch }) => {
 
   const finalBgClass =
     myPosition && myCounterPosition
-      ? 'bg-sky-800 border-slate-800'
+      ? 'bg-sky-800 border-slate-900'
       : myPosition
-        ? 'bg-sky-800 border-slate-800'
+        ? 'bg-sky-800 border-slate-900'
         : myCounterPosition
           ? 'bg-rose-900 border-rose-900'
           : bgClass;
@@ -106,8 +106,8 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch }) => {
       <button
         disabled={loading}
         onClick={() => handleTagClick(false)}
-        onMouseEnter={() => setBgClass('bg-sky-800 border-slate-800')}
-        onMouseLeave={() => setBgClass('bg-transparent border-slate-800')}
+        onMouseEnter={() => setBgClass('bg-sky-800 border-slate-900')}
+        onMouseLeave={() => setBgClass('bg-transparent border-slate-900')}
         className="flex items-center  text-slate-100  text-xs rounded-l-full space-x-3 px-2 h-7 ">
         {loading && <Spinner />}
         {!loading && tag.object?.image && (
@@ -120,7 +120,7 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch }) => {
         disabled={loading}
         onClick={() => handleTagClick(true)}
         onMouseEnter={() => setBgClass('bg-rose-900 border-rose-900')}
-        onMouseLeave={() => setBgClass('bg-transparent border-slate-800')}
+        onMouseLeave={() => setBgClass('bg-transparent border-slate-900')}
         className="text-rose-400 hover:text-rose-200 text-xs px-2 flex h-7 items-center space-x-2 ">
         {tag.counter_vault?.position_count}
       </button>

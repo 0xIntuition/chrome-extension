@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
-import '@src/index.css';
+import '@extension/ui/dist/global.css';
 import Popup from '@src/Popup';
-
+import { ApolloProviderWrapper } from '@extension/shared';
 function init() {
   const appContainer = document.querySelector('#app-container');
   if (!appContainer) {
@@ -9,7 +9,11 @@ function init() {
   }
   const root = createRoot(appContainer);
 
-  root.render(<Popup />);
+  root.render(
+    <ApolloProviderWrapper>
+      <Popup />
+    </ApolloProviderWrapper>,
+  );
 }
 
 init();
