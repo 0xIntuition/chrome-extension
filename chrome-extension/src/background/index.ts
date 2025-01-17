@@ -40,7 +40,7 @@ async function storeTab(tab: chrome.tabs.Tab) {
         type: 'address',
       });
     }
-  } else {
+  } else if (tab.url?.startsWith('https://')) {
     chrome.scripting
       .executeScript({
         target: { tabId: tab.id! },

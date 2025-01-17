@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { Spinner } from './Spinner';
 import { useMultiVault, useMutation, useStorage } from '@extension/shared';
-import { Address, parseEther } from '@extension/shared';
 import { pinThingMutation } from '@extension/shared';
-import { currentTabStorage } from '@extension/storage';
+import { currentTabStorage, currentAccountStorage } from '@extension/storage';
 
 export const AtomForm = () => {
-  const [account, setAccount] = useState<Address | undefined>(undefined);
+  const currentAccount = useStorage(currentAccountStorage);
   const [progressMessage, setProgressMessage] = useState<string | undefined>(undefined);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  const { multivault, client } = useMultiVault(account);
+  const { multivault } = useMultiVault(currentAccount);
   const [creatingAtom, setCreatingAtom] = useState(false);
   const [pinThing] = useMutation(pinThingMutation);
 
@@ -46,20 +45,8 @@ export const AtomForm = () => {
 
     try {
       setProgressMessage('Creating atom...');
-      let account: `0x${string}` | undefined = localStorage.getItem('account') as `0x${string}` | undefined;
-      if (!account) {
-        const accounts = await client?.requestAddresses();
-        account = accounts?.[0];
-        if (!account) {
-          throw new Error('No account found');
-        }
-        localStorage.setItem('account', account);
-      }
-      setAccount(account);
-
       const { hash } = await multivault.createAtom({
         uri: finalUri,
-        initialDeposit: parseEther('0.00042'),
       });
       setProgressMessage(undefined);
       console.log(`Transaction hash: ${hash}`);

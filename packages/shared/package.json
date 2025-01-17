@@ -21,10 +21,10 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@extension/storage": "workspace:*",
     "@extension/tsconfig": "workspace:*"
   },
   "dependencies": {
+    "@extension/storage": "workspace:*",
     "@0xintuition/protocol": "^0.1.3",
     "@apollo/client": "^3.12.6",
     "@tanstack/react-query": "^5.64.0",

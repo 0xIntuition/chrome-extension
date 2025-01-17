@@ -2,7 +2,7 @@ export { type Address, formatEther, parseEther, isAddress, type Chain } from 'vi
 
 import { Address, createPublicClient, http } from 'viem';
 import { base, baseSepolia, mainnet, polygon, arbitrum, sepolia, linea, lineaSepolia, Chain } from 'viem/chains';
-
+export { base, baseSepolia, mainnet, linea };
 // Initialize a client for the Ethereum mainnet
 export const supportedChains = [base, baseSepolia, mainnet, polygon, arbitrum, sepolia, linea, lineaSepolia];
 

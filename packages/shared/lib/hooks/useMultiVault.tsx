@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Multivault } from '@0xintuition/protocol';
+import { Multivault, deployments } from '@0xintuition/protocol';
 import { createPublicClient, createWalletClient, custom, http, WalletClient } from 'viem';
-import { base } from 'viem/chains';
+import { base, baseSepolia } from 'viem/chains';
 import createMetaMaskProvider from 'metamask-extension-provider';
-
-export { base };
+import { currentChainStorage } from '@extension/storage';
+import { useStorage } from './useStorage';
 
 // Create a public client for interacting with the blockchain (waiting for transaction receipts)
-export const publicClient = createPublicClient({
-  chain: base, // Use the Base chain
-  transport: http(), // Use HTTP transport for communication
-});
-
 export function useMultiVault(account?: `0x${string}`) {
   const [client, setClient] = useState<WalletClient | undefined>(undefined);
+  const chainId = useStorage(currentChainStorage);
 
   useEffect(() => {
     const client = createWalletClient({
-      chain: base, // Use the Base chain
+      chain: chainId === base.id ? base : baseSepolia, // Use the Base chain
       account,
       transport: custom(createMetaMaskProvider()),
     });
@@ -27,12 +23,20 @@ export function useMultiVault(account?: `0x${string}`) {
     setClient(client);
   }, [account]);
 
-  const multivault = new Multivault({
-    // @ts-ignore
-    publicClient,
-    // @ts-ignore
-    walletClient: client,
+  const publicClient = createPublicClient({
+    chain: chainId === base.id ? base : baseSepolia, // Use the Base chain
+    transport: http(), // Use HTTP transport for communication
   });
+
+  const multivault = new Multivault(
+    {
+      // @ts-ignore
+      publicClient,
+      // @ts-ignore
+      walletClient: client,
+    },
+    deployments[chainId],
+  );
 
   return { multivault, client };
 }
