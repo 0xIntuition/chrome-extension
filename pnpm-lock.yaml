@@ -208,6 +208,9 @@ importers:
       '@apollo/client':
         specifier: ^3.12.6
         version: 3.12.6(@types/react@18.3.5)(graphql-ws@5.16.2(graphql@16.10.0))(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@extension/storage':
+        specifier: workspace:*
+        version: link:../storage
       '@tanstack/react-query':
         specifier: ^5.64.0
         version: 5.64.0(react@18.3.1)
@@ -218,9 +221,6 @@ importers:
         specifier: ^2.22.8
         version: 2.22.8(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)
     devDependencies:
-      '@extension/storage':
-        specifier: workspace:*
-        version: link:../storage
       '@extension/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
