@@ -104,6 +104,7 @@ interface AtomCardProps {
   handleAtomClick: (atomId: number, myPosition: string | undefined) => void;
   openAtom: (id: number) => void;
   useClaimsFromFollowing: (address: string | undefined, subjectId: number) => any[];
+  refetch: () => void;
 }
 
 export const AtomCard: React.FC<AtomCardProps> = ({
@@ -114,6 +115,7 @@ export const AtomCard: React.FC<AtomCardProps> = ({
   handleAtomClick,
   openAtom,
   useClaimsFromFollowing,
+  refetch,
 }) => {
   const [showTagSearch, setShowTagSearch] = React.useState(false);
   const [selectedTag, setSelectedTag] = React.useState<any>(null);
@@ -251,7 +253,7 @@ export const AtomCard: React.FC<AtomCardProps> = ({
 
           {showGlobalClaims &&
             tags?.length > 0 &&
-            tags.map((tag, index) => <Tag key={index} tag={tag} account={account} refetch={() => {}} />)}
+            tags.map((tag, index) => <Tag key={index} tag={tag} account={account} refetch={refetch} />)}
 
           {!showGlobalClaims &&
             triples?.length > 0 &&
@@ -260,7 +262,7 @@ export const AtomCard: React.FC<AtomCardProps> = ({
                 key={index}
                 tag={triple.triple}
                 account={account}
-                refetch={() => {}}
+                refetch={refetch}
                 claimsForCount={triple.claimsForCount}
                 claimsAgainstCount={triple.claimsAgainstCount}
               />

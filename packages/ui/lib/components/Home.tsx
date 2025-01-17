@@ -160,6 +160,7 @@ export const Home: React.FC = () => {
           handleAtomClick={handleAtomClick}
           openAtom={openAtom}
           useClaimsFromFollowing={useClaimsFromFollowing}
+          refetch={refetch}
         />
       ))}
       {!showAtomForm && (
