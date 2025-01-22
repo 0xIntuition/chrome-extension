@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Address, formatEther, parseEther } from '@extension/shared';
-import { useMultiVault } from '@extension/shared';
+import { Address, formatEther } from '@extension/shared';
+import { useMultiVault, useWaitForTransactionEvents } from '@extension/shared';
 import { Spinner } from './Spinner';
 
 interface TagProps {
@@ -42,6 +42,7 @@ interface TagProps {
 }
 
 export const Tag: React.FC<TagProps> = ({ tag, account, refetch, claimsForCount, claimsAgainstCount }) => {
+  const wait = useWaitForTransactionEvents();
   const { multivault } = useMultiVault(account);
   const [bgClass, setBgClass] = useState('bg-transparent border-slate-900');
   const [loading, setLoading] = useState(false);
@@ -92,17 +93,18 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch, claimsForCount,
     const tx = await multivault.redeemTriple(BigInt(vaultId), BigInt(amount));
     console.log(tx);
     // wait 2 seconds
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await wait(tx.hash);
     setLoading(false);
     refetch();
   };
 
   const depositTriple = async (vaultId: string) => {
     setLoading(true);
-    const tx = await multivault.depositTriple(BigInt(vaultId), parseEther('0.0042'));
+    const config = await multivault.getGeneralConfig();
+    const tx = await multivault.depositTriple(BigInt(vaultId), config.minDeposit);
     console.log(tx);
     // wait 2 seconds
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await wait(tx.hash);
     setLoading(false);
     refetch();
   };

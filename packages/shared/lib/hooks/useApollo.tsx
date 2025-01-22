@@ -20,23 +20,29 @@ export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
-// TODO: finish this
+// TODO: remove hash conversion when the base chain is updated
 export function useWaitForTransactionEvents() {
   const client = useApolloClient();
+  const chainId = useStorage(currentChainStorage);
   return async (hash: string) => {
-    const fixedHash = convertHash(hash);
+    let fixedHash = hash;
+    if (chainId === base.id) {
+      fixedHash = convertHash(hash);
+    }
     const promise = new Promise(async (resolve, reject) => {
       while (true) {
-        const { data, loading, error } = await client.query({
+        const { data, error } = await client.query({
           query: getTransactionEventsQuery,
           variables: { hash: fixedHash },
+          fetchPolicy: 'network-only',
         });
         if (data?.events.length > 0) {
-          resolve(true);
+          return resolve(true);
         }
         if (error) {
-          reject(error);
+          return reject(error);
         }
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
     });
     return promise;
@@ -48,7 +54,7 @@ function convertHash(input: string): string {
   const hexString = input.startsWith('0x') ? input.slice(2) : input;
 
   // Convert each character in the string to its ASCII representation in hexadecimal
-  const converted = [...hexString].map(char => `\\x${char.charCodeAt(0).toString(16)}`).join('');
+  const converted = [...hexString].map(char => `${char.charCodeAt(0).toString(16)}`).join('');
 
-  return converted;
+  return `\\x${converted}`;
 }
