@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { parseEther, useQuery } from '@extension/shared';
-import { getClaimsFromFollowingAboutSubject, searchAtomsByUriQuery, base } from '@extension/shared';
+import {
+  getClaimsFromFollowingAboutSubject,
+  searchAtomsByUriQuery,
+  base,
+  useWaitForTransactionEvents,
+} from '@extension/shared';
 import { useMultiVault } from '@extension/shared';
 import { Spinner } from './Spinner.js';
 import { AtomForm } from './AtomForm.js';
@@ -10,11 +15,12 @@ import { currentTabStorage, currentAccountStorage, currentChainStorage } from '@
 import { useStorage } from '@extension/shared';
 
 export const Home: React.FC = () => {
+  const wait = useWaitForTransactionEvents();
   const currentTab = useStorage(currentTabStorage);
   const currentAccount = useStorage(currentAccountStorage);
   const currentChain = useStorage(currentChainStorage);
   const [showAtomForm, setShowAtomForm] = useState(false);
-  const { multivault, client } = useMultiVault(currentAccount);
+  const { multivault } = useMultiVault(currentAccount);
   const [showTagSearch, setShowTagSearch] = useState(false);
   const [selectedTag, setSelectedTag] = useState<any>(null);
 
@@ -49,18 +55,24 @@ export const Home: React.FC = () => {
 
     // check if triple exists
     const tripleExists = await multivault.getTripleIdFromAtoms(subjectId, predicateId, objectId);
+    const config = await multivault.getGeneralConfig();
     if (tripleExists) {
       console.log('Triple exists');
-      await multivault.depositTriple(tripleExists, parseEther('0.00042'));
+      const { hash } = await multivault.depositTriple(tripleExists, config.minDeposit);
+      wait(hash);
     } else {
       console.log('Triple does not exist');
-      await multivault.createTriple({ subjectId, predicateId, objectId, initialDeposit: parseEther('0.00042') });
+      const { hash } = await multivault.createTriple({
+        subjectId,
+        predicateId,
+        objectId,
+        initialDeposit: config.minDeposit,
+      });
+      wait(hash);
     }
 
-    setTimeout(() => {
-      setSelectedTag(null);
-      refetch();
-    }, 2000);
+    setSelectedTag(null);
+    refetch();
   };
 
   const useClaimsFromFollowing = (address: string | undefined, subjectId: number) => {
@@ -106,13 +118,11 @@ export const Home: React.FC = () => {
 
       console.log(`Depositing for atom ${atomId} from account ${currentAccount}`);
 
-      const { hash } = await multivault.depositAtom(BigInt(atomId), parseEther('0.0042'));
+      const config = await multivault.getGeneralConfig();
+      const { hash } = await multivault.depositAtom(BigInt(atomId), config.minDeposit);
       console.log(`Transaction hash: ${hash}`);
-
-      // wait 1 second before refetching and updating the UI
-      setTimeout(() => {
-        refetch();
-      }, 1000);
+      wait(hash);
+      refetch();
     } catch (error: any) {
       console.log('Error during deposit:', error.message);
     }
@@ -122,9 +132,8 @@ export const Home: React.FC = () => {
     try {
       const { hash } = await multivault.redeemAtom(BigInt(atomId), BigInt(myPosition));
       console.log(`Transaction hash: ${hash}`);
-      setTimeout(() => {
-        refetch();
-      }, 1000);
+      wait(hash);
+      refetch();
     } catch (error: any) {
       console.log('Error during redeem:', error.message);
     }

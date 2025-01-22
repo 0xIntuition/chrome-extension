@@ -92,7 +92,6 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch, claimsForCount,
     setLoading(true);
     const tx = await multivault.redeemTriple(BigInt(vaultId), BigInt(amount));
     console.log(tx);
-    // wait 2 seconds
     await wait(tx.hash);
     setLoading(false);
     refetch();
@@ -103,7 +102,6 @@ export const Tag: React.FC<TagProps> = ({ tag, account, refetch, claimsForCount,
     const config = await multivault.getGeneralConfig();
     const tx = await multivault.depositTriple(BigInt(vaultId), config.minDeposit);
     console.log(tx);
-    // wait 2 seconds
     await wait(tx.hash);
     setLoading(false);
     refetch();
