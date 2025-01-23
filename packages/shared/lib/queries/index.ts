@@ -184,7 +184,7 @@ export const searchAtomsQuery = gql(/* GraphQL */ `
 `);
 
 export const getTransactionEventsQuery = gql(/* GraphQL */ `
-  query GetTransactionEvents($hash: bytea) {
+  query GetTransactionEvents($hash: String!) {
     events(where: { transaction_hash: { _eq: $hash } }) {
       transaction_hash
     }
