@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client';
 import '@extension/ui/dist/global.css';
 import Popup from '@src/Popup';
 import { ApolloProviderWrapper } from '@extension/shared';
+import { MultiVaultProvider } from '@extension/shared';
 function init() {
   const appContainer = document.querySelector('#app-container');
   if (!appContainer) {
@@ -11,7 +12,9 @@ function init() {
 
   root.render(
     <ApolloProviderWrapper>
-      <Popup />
+      <MultiVaultProvider>
+        <Popup />
+      </MultiVaultProvider>
     </ApolloProviderWrapper>,
   );
 }

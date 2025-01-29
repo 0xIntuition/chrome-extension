@@ -43,7 +43,7 @@ interface TagProps {
 
 export const Tag: React.FC<TagProps> = ({ tag, account, refetch, claimsForCount, claimsAgainstCount }) => {
   const wait = useWaitForTransactionEvents();
-  const { multivault } = useMultiVault(account);
+  const { multivault } = useMultiVault();
   const [bgClass, setBgClass] = useState('bg-transparent border-slate-900');
   const [loading, setLoading] = useState(false);
   const myPosition = tag.vault?.myPosition[0]?.shares;

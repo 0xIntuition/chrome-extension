@@ -7884,7 +7884,13 @@ export type SearchAtomsQueryVariables = Exact<{
 
 export type SearchAtomsQuery = {
   __typename?: 'query_root';
-  atoms: Array<{ __typename?: 'atoms'; id: any; image?: string | null; label?: string | null }>;
+  atoms: Array<{
+    __typename?: 'atoms';
+    id: any;
+    image?: string | null;
+    label?: string | null;
+    vault?: { __typename?: 'vaults'; total_shares: any } | null;
+  }>;
 };
 
 export type GetTransactionEventsQueryVariables = Exact<{
@@ -8755,8 +8761,17 @@ export const SearchAtomsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'block_timestamp' },
-                      value: { kind: 'EnumValue', value: 'desc' },
+                      name: { kind: 'Name', value: 'vault' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'total_shares' },
+                            value: { kind: 'EnumValue', value: 'desc' },
+                          },
+                        ],
+                      },
                     },
                   ],
                 },
@@ -8813,6 +8828,14 @@ export const SearchAtomsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'image' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'vault' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'total_shares' } }],
+                  },
+                },
               ],
             },
           },

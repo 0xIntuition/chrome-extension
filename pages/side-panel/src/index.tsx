@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client';
 import '@extension/ui/dist/global.css';
 import SidePanel from '@src/SidePanel';
 import { ApolloProviderWrapper } from '@extension/shared';
+import { MultiVaultProvider } from '@extension/shared';
 function init() {
   const appContainer = document.querySelector('#app-container');
   if (!appContainer) {
@@ -10,7 +11,9 @@ function init() {
   const root = createRoot(appContainer);
   root.render(
     <ApolloProviderWrapper>
-      <SidePanel />
+      <MultiVaultProvider>
+        <SidePanel />
+      </MultiVaultProvider>
     </ApolloProviderWrapper>,
   );
 }

@@ -26,6 +26,7 @@ const Options = () => {
 
   const handleLogin = async () => {
     const availableAddresses = await client?.requestAddresses();
+    console.log('availableAddresses', availableAddresses);
     if (availableAddresses && availableAddresses.length > 0) {
       setAddresses(availableAddresses);
       handleSetAccount(availableAddresses[0]);
@@ -50,6 +51,7 @@ const Options = () => {
   useEffect(() => {
     const getAccount = async () => {
       const availableAddresses = await client?.getAddresses();
+      console.log('getAddresses', availableAddresses);
       if (availableAddresses && availableAddresses.length > 0) {
         setAddresses(availableAddresses);
         if (!account || !availableAddresses.includes(account)) {

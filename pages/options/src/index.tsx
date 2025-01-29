@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import '@extension/ui/dist/global.css';
 import Options from '@src/Options';
+import { MultiVaultProvider } from '@extension/shared';
 
 function init() {
   const appContainer = document.querySelector('#app-container');
@@ -8,7 +9,11 @@ function init() {
     throw new Error('Can not find #app-container');
   }
   const root = createRoot(appContainer);
-  root.render(<Options />);
+  root.render(
+    <MultiVaultProvider>
+      <Options />
+    </MultiVaultProvider>,
+  );
 }
 
 init();

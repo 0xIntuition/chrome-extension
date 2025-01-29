@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { Spinner } from './Spinner';
 import { useMultiVault, useMutation, useStorage, useWaitForTransactionEvents } from '@extension/shared';
 import { pinThingMutation } from '@extension/shared';
-import { currentTabStorage, currentAccountStorage } from '@extension/storage';
+import { currentTabStorage } from '@extension/storage';
 
 export const AtomForm = ({ refetch }: { refetch: () => void }) => {
   const wait = useWaitForTransactionEvents();
-  const currentAccount = useStorage(currentAccountStorage);
   const [progressMessage, setProgressMessage] = useState<string | undefined>(undefined);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  const { multivault } = useMultiVault(currentAccount);
+  const { multivault } = useMultiVault();
   const [creatingAtom, setCreatingAtom] = useState(false);
   const [pinThing] = useMutation(pinThingMutation);
 
@@ -25,6 +24,7 @@ export const AtomForm = ({ refetch }: { refetch: () => void }) => {
     }
     let finalUri = currentTab.url;
     setCreatingAtom(true);
+    console.log('creating atom', { currentTab });
     if (currentTab.type === 'url') {
       setProgressMessage('Uploading to IPFS...');
       const result = await pinThing({

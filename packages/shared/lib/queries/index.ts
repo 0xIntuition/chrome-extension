@@ -172,13 +172,16 @@ export const getClaimsFromFollowingAboutSubject = gql(/* GraphQL */ `
 export const searchAtomsQuery = gql(/* GraphQL */ `
   query SearchAtoms($label: String!) {
     atoms(
-      order_by: { block_timestamp: desc }
+      order_by: { vault: { total_shares: desc } }
       limit: 30
       where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }
     ) {
       id
       image
       label
+      vault {
+        total_shares
+      }
     }
   }
 `);

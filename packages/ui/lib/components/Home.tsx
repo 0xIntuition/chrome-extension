@@ -20,7 +20,7 @@ export const Home: React.FC = () => {
   const currentAccount = useStorage(currentAccountStorage);
   const currentChain = useStorage(currentChainStorage);
   const [showAtomForm, setShowAtomForm] = useState(false);
-  const { multivault } = useMultiVault(currentAccount);
+  const { multivault } = useMultiVault();
   const [showTagSearch, setShowTagSearch] = useState(false);
   const [selectedTag, setSelectedTag] = useState<any>(null);
 
