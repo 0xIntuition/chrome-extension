@@ -20,7 +20,7 @@ const documents = {
     types.PinThingDocument,
   '\n  query ClaimsFromFollowingAboutSubject($address: String!, $subjectId: numeric!) {\n    claims_from_following(args: { address: $address }, where: { subject_id: { _eq: $subjectId } }) {\n      shares\n      counter_shares\n      triple {\n        id\n        vault_id\n        counter_vault_id\n        subject {\n          emoji\n          label\n          image\n          id\n        }\n        predicate {\n          emoji\n          label\n          image\n          id\n        }\n        object {\n          emoji\n          label\n          image\n          id\n        }\n        counter_vault {\n          id\n          position_count\n          total_shares\n          current_share_price\n          myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {\n            shares\n            account_id\n          }\n        }\n        vault {\n          id\n          position_count\n          total_shares\n          current_share_price\n          myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {\n            shares\n            account_id\n          }\n        }\n      }\n      account {\n        id\n        label\n      }\n    }\n  }\n':
     types.ClaimsFromFollowingAboutSubjectDocument,
-  '\n  query SearchAtoms($label: String!) {\n    atoms(\n      order_by: { vault: {total_shares: desc} }\n      limit: 30\n      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }\n    ) {\n      id\n      image\n      label\n      vault {\n        total_shares\n      }\n    }\n  }\n':
+  '\n  query SearchAtoms($label: String!) {\n    atoms(\n      order_by: { vault: { total_shares: desc } }\n      limit: 30\n      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }\n    ) {\n      id\n      image\n      label\n      vault {\n        total_shares\n      }\n    }\n  }\n':
     types.SearchAtomsDocument,
   '\n  query GetTransactionEvents($hash: String!) {\n    events(where: { transaction_hash: { _eq: $hash } }) {\n      transaction_hash\n    }\n  }\n':
     types.GetTransactionEventsDocument,
@@ -62,8 +62,8 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: '\n  query SearchAtoms($label: String!) {\n    atoms(\n      order_by: { vault: {total_shares: desc} }\n      limit: 30\n      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }\n    ) {\n      id\n      image\n      label\n      vault {\n        total_shares\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query SearchAtoms($label: String!) {\n    atoms(\n      order_by: { vault: {total_shares: desc} }\n      limit: 30\n      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }\n    ) {\n      id\n      image\n      label\n      vault {\n        total_shares\n      }\n    }\n  }\n'];
+  source: '\n  query SearchAtoms($label: String!) {\n    atoms(\n      order_by: { vault: { total_shares: desc } }\n      limit: 30\n      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }\n    ) {\n      id\n      image\n      label\n      vault {\n        total_shares\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query SearchAtoms($label: String!) {\n    atoms(\n      order_by: { vault: { total_shares: desc } }\n      limit: 30\n      where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }\n    ) {\n      id\n      image\n      label\n      vault {\n        total_shares\n      }\n    }\n  }\n'];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
