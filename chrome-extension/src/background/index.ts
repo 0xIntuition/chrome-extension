@@ -26,7 +26,7 @@ async function storeTab(tab: chrome.tabs.Tab) {
     if (isContract) {
       currentTabStorage.set({
         tabId: tab.id!,
-        url: address.toLowerCase(),
+        url: `caip10:eip155:${chain.id}:${address}`,
         title: address.slice(0, 6) + '...' + address.slice(-4),
         description: `Contract on ${chain.name}`,
         type: 'caip10',
@@ -34,7 +34,7 @@ async function storeTab(tab: chrome.tabs.Tab) {
     } else {
       currentTabStorage.set({
         tabId: tab.id!,
-        url: address.toLowerCase(),
+        url: address.toLowerCase(), // Why lowercase?
         title: address.slice(0, 6) + '...' + address.slice(-4),
         description: 'Ethereum account',
         type: 'address',
