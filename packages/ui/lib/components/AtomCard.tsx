@@ -1,10 +1,11 @@
 import React from 'react';
-import { Address, formatEther } from '@extension/shared';
+import { Address, formatEther, useStorage } from '@extension/shared';
 import { AccountImage } from './AccountImage.js';
 import { Tag } from './Claim.js';
 import { TagSearch } from './TagSearch.js';
 import { Spinner } from './Spinner.js';
 import { supportedChains } from '@extension/shared';
+import { currentChainStorage } from '@extension/storage';
 
 export interface Atom {
   id: number;
@@ -121,6 +122,7 @@ export const AtomCard: React.FC<AtomCardProps> = ({
   const [selectedTag, setSelectedTag] = React.useState<any>(null);
   const [showGlobalClaims, setShowGlobalClaims] = React.useState(false);
 
+  const chainId = useStorage(currentChainStorage);
   const claims = useClaimsFromFollowing(account?.toLocaleLowerCase(), atom.id);
 
   type Triple = {
@@ -220,7 +222,7 @@ export const AtomCard: React.FC<AtomCardProps> = ({
             </h2>
             <p>
               <button onClick={() => openAtom(atom.id)} className="text-xs text-slate-600 hover:text-slate-400">
-                did:i7n:84532:{atom.id}
+                did:i7n:{chainId}:{atom.id}
               </button>
             </p>
           </div>

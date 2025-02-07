@@ -25,8 +25,9 @@ const Options = () => {
   const { client } = useMultiVault();
 
   const handleLogin = async () => {
+    console.log('handleLogin', client);
     const availableAddresses = await client?.requestAddresses();
-    console.log('availableAddresses', availableAddresses);
+    console.log('availableAddresses from login', availableAddresses);
     if (availableAddresses && availableAddresses.length > 0) {
       setAddresses(availableAddresses);
       handleSetAccount(availableAddresses[0]);
@@ -43,8 +44,8 @@ const Options = () => {
     const chain = availableCains.find(chain => chain.id === value);
     if (chain) {
       currentChainStorage.set(chain.id);
-      client?.addChain({ chain });
-      client?.switchChain({ id: chain.id });
+      // client?.addChain({ chain });
+      // client?.switchChain({ id: chain.id });
     }
   };
 

@@ -33,10 +33,7 @@ export const Home: React.FC = () => {
     fetchPolicy: 'cache-and-network',
   });
   const openAtom = (id: number) => {
-    const url =
-      currentChain === base.id
-        ? 'https://beta.portal.intuition.systems/app/identity'
-        : 'https://dev.portal.intuition.systems/app/identity';
+    const url = currentChain === base.id ? 'https://app.i7n.xyz/a' : 'https://dev.i7n.xyz/a';
     chrome.tabs.create({ url: `${url}/${id}` });
   };
 

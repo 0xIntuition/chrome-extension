@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import { createContext, useContext, ReactNode, useState, useEffect, useMemo } from 'react';
 import { Multivault, deployments } from '@0xintuition/protocol';
 import { createPublicClient, createWalletClient, custom, http, WalletClient } from 'viem';
 import { base, baseSepolia } from 'viem/chains';
@@ -14,33 +14,39 @@ type MultiVaultContextType = {
 const MultiVaultContext = createContext<MultiVaultContextType | undefined>(undefined);
 
 export function MultiVaultProvider({ children }: { children: ReactNode }) {
-  const [client, setClient] = useState<WalletClient | undefined>(undefined);
   const chainId = useStorage(currentChainStorage);
   const account = useStorage(currentAccountStorage);
-
-  useEffect(() => {
-    console.log('creating client', { chainId, account });
-    const client = createWalletClient({
+  const client = useMemo(() => {
+    return createWalletClient({
       chain: chainId === base.id ? base : baseSepolia,
       account,
       transport: custom(createMetaMaskProvider()),
     });
+  }, [account, chainId]);
+  // if chainId changes, we need to switch the chain
+  useEffect(() => {
+    if (chainId) {
+      console.log('switching chain', { chainId });
+      client?.switchChain({ id: chainId });
+    }
+  }, [chainId, client]);
 
-    setClient(client);
-  }, [account]);
+  const publicClient = useMemo(() => {
+    return createPublicClient({
+      chain: chainId === base.id ? base : baseSepolia,
+      transport: http(),
+    });
+  }, [chainId]);
 
-  const publicClient = createPublicClient({
-    chain: chainId === base.id ? base : baseSepolia,
-    transport: http(),
-  });
-
-  const multivault = new Multivault(
-    {
-      publicClient,
-      walletClient: client,
-    } as any,
-    deployments[chainId],
-  );
+  const multivault = useMemo(() => {
+    return new Multivault(
+      {
+        publicClient,
+        walletClient: client,
+      } as any,
+      deployments[chainId],
+    );
+  }, [chainId, client, publicClient]);
 
   return <MultiVaultContext.Provider value={{ multivault, client }}>{children}</MultiVaultContext.Provider>;
 }
