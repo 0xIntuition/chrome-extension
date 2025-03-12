@@ -1,6 +1,6 @@
 {
   "name": "intuition",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "chrome extension - core settings",
   "type": "module",
   "scripts": {
