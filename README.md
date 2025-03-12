@@ -1,4 +1,4 @@
-# Trustbar: Intuition Chrome Extension
+# Intuition Chrome Extension
 
 The Intuition Chrome Extension is your gateway to accessing the Intuition knowledge graph across the web. Seamlessly integrated with Intuition, this extension empowers you to bring your trusted network and personal insights to any website you visit, transforming your browsing experience with valuable context and enhanced security.
 
