@@ -1,35 +1,41 @@
 <div align="center">
 
-<picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/99cb6303-64e4-4bed-bf3f-35735353e6de" />
-    <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/a5dbf71c-c509-4c4f-80f4-be88a1943b0a" />
-    <img alt="Logo" src="https://github.com/user-attachments/assets/99cb6303-64e4-4bed-bf3f-35735353e6de" />
-</picture>
+# Trustbar: Intuition Chrome Extension
 
-![](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
-![](https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![](https://badges.aleen42.com/src/vitejs.svg)
+The Intuition Chrome Extension is your gateway to accessing the Intuition knowledge graph across the web. Seamlessly integrated with Intuition, this extension empowers you to bring your trusted network and personal insights to any website you visit, transforming your browsing experience with valuable context and enhanced security.
 
-![GitHub action badge](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/actions/workflows/build-zip.yml/badge.svg)
-![GitHub action badge](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/actions/workflows/lint.yml/badge.svg)
+## FOR USERS
 
-<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/Jonghakseo/chrome-extension-boilerplate-react-viteFactions&count_bg=%23#222222&title_bg=%23#454545&title=😀&edge_flat=true" alt="hits"/>
-<a href="https://discord.gg/4ERQ6jgV9a" target="_blank"><img src="https://discord.com/api/guilds/1263404974830915637/widget.png"/></a>
+Key Features
+Prevent Phishing Attacks: Get real-time warnings about suspicious websites, leveraging trust signals from people you know and trust.
+Access Trusted Comments and Reviews: See opinions, reviews, and insights from your trusted network wherever you go, helping you make better decisions and avoid misinformation.
+Keep Track of Your Discoveries: Capture, organize, and revisit information you find online, keeping it accessible and connected to your Intuition knowledge graph, and allowing you to easily share it with others.
+AI-Powered Insights: Ask AI questions about any site you're visiting. The AI uses the context of the Intuition knowledge graph to provide additional insights and relevant information, enhancing your understanding and decision-making across the web.
+Built with TypeScript and React, this extension offers a modern and reliable experience for browsing safely and staying informed, backed by Intuition's decentralized knowledge ecosystem.
 
-> This boilerplate
-> has [Legacy version](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/tree/legacy)
+Contributing and Integration
+We welcome contributions to the Intuition Chrome Extension! Whether you're interested in adding new features, improving existing ones, or simply sharing feedback, your input helps enhance the extension for the entire community.
 
-</div>
+Additionally, if you're inspired to build your own browser extension, this project can serve as a solid foundation. With Intuition's permissionless integration capabilities, you can easily connect your extension to the Intuition knowledge graph. If you already have a browser extension, you can integrate with Intuition to bring the same powerful functionality to your users, enabling them to access trusted insights and enhanced security across the web.
 
-> [!NOTE]
-> This project is listed in the [Awesome Vite](https://github.com/vitejs/awesome-vite)
+Feel free to explore, contribute, and innovate with us!
 
-> [!TIP]
-> Share storage state between all pages
->
-> https://github.com/user-attachments/assets/3b8e189f-6443-490e-a455-4f9570267f8c
+Installation Instructions
+Clone this repository
+Install dependencies & build:
+pnpm i
+pnpm build
+Usage
+After installation, you can:
 
-## Table of Contents
+Navigate to chrome://extensions/
+Enable Developer Mode
+Click "Load unpacked"
+Select the project folder
+
+## FOR DEVELOPERS
+
+### Table of Contents
 
 - [Intro](#intro)
 - [Features](#features)
