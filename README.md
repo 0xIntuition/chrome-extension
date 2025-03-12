@@ -1,26 +1,24 @@
-<div align="center">
-
 # Trustbar: Intuition Chrome Extension
 
 The Intuition Chrome Extension is your gateway to accessing the Intuition knowledge graph across the web. Seamlessly integrated with Intuition, this extension empowers you to bring your trusted network and personal insights to any website you visit, transforming your browsing experience with valuable context and enhanced security.
 
-## FOR USERS
+# FOR USERS
 
-Key Features
-Prevent Phishing Attacks: Get real-time warnings about suspicious websites, leveraging trust signals from people you know and trust.
-Access Trusted Comments and Reviews: See opinions, reviews, and insights from your trusted network wherever you go, helping you make better decisions and avoid misinformation.
-Keep Track of Your Discoveries: Capture, organize, and revisit information you find online, keeping it accessible and connected to your Intuition knowledge graph, and allowing you to easily share it with others.
-AI-Powered Insights: Ask AI questions about any site you're visiting. The AI uses the context of the Intuition knowledge graph to provide additional insights and relevant information, enhancing your understanding and decision-making across the web.
-Built with TypeScript and React, this extension offers a modern and reliable experience for browsing safely and staying informed, backed by Intuition's decentralized knowledge ecosystem.
+## Key Features
+- Prevent Phishing Attacks: Get real-time warnings about suspicious websites, leveraging trust signals from people you know and trust.
+- Access Trusted Comments and Reviews: See opinions, reviews, and insights from your trusted network wherever you go, helping you make better decisions and avoid misinformation.
+- Keep Track of Your Discoveries: Capture, organize, and revisit information you find online, keeping it accessible and connected to your Intuition knowledge graph, and allowing you to easily share it with others.
+- AI-Powered Insights: Ask AI questions about any site you're visiting. The AI uses the context of the Intuition knowledge graph to provide additional insights and relevant information, enhancing your understanding and decision-making across the web.
+- Built with TypeScript and React, this extension offers a modern and reliable experience for browsing safely and staying informed, backed by Intuition's decentralized knowledge ecosystem.
 
-Contributing and Integration
+## Contributing and Integration
 We welcome contributions to the Intuition Chrome Extension! Whether you're interested in adding new features, improving existing ones, or simply sharing feedback, your input helps enhance the extension for the entire community.
 
 Additionally, if you're inspired to build your own browser extension, this project can serve as a solid foundation. With Intuition's permissionless integration capabilities, you can easily connect your extension to the Intuition knowledge graph. If you already have a browser extension, you can integrate with Intuition to bring the same powerful functionality to your users, enabling them to access trusted insights and enhanced security across the web.
 
 Feel free to explore, contribute, and innovate with us!
 
-Installation Instructions
+## Installation Instructions
 Clone this repository
 Install dependencies & build:
 pnpm i
@@ -33,9 +31,9 @@ Enable Developer Mode
 Click "Load unpacked"
 Select the project folder
 
-## FOR DEVELOPERS
+# FOR DEVELOPERS
 
-### Table of Contents
+## Table of Contents
 
 - [Intro](#intro)
 - [Features](#features)
@@ -224,32 +222,3 @@ Also, suggest new features or share any challenges you've faced while developing
 - [Rollup](https://rollupjs.org/guide/en/)
 - [Turborepo](https://turbo.build/repo/docs)
 - [Rollup-plugin-chrome-extension](https://www.extend-chrome.dev/rollup-plugin)
-
-## Star History <a name="star-history"></a>
-
-<a href="https://star-history.com/#Jonghakseo/chrome-extension-boilerplate-react-vite&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Jonghakseo/chrome-extension-boilerplate-react-vite&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Jonghakseo/chrome-extension-boilerplate-react-vite&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Jonghakseo/chrome-extension-boilerplate-react-vite&type=Date" />
- </picture>
-</a>
-
-## Contributors <a name="contributors"></a>
-
-This Boilerplate is made possible thanks to all of its contributors.
-
-<a href="https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/graphs/contributors">
-  <img width="500px" src="https://contrib.rocks/image?repo=Jonghakseo/chrome-extension-boilerplate-react-vite" alt="All Contributors"/>
-</a>
-
----
-
-## Special Thanks To
-
-| <a href="https://jb.gg/OpenSourceSupport"><img width="40" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo."></a> | <a href="https://www.linkedin.com/in/j-acks0n"><img width="40" style="border-radius:50%" src='https://avatars.githubusercontent.com/u/23139754' alt='Jackson Hong'/></a> |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-
----
-
-Made by [Jonghakseo](https://jonghakseo.github.io/)
