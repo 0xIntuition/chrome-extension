@@ -18,11 +18,21 @@ Additionally, if you're inspired to build your own browser extension, this proje
 
 Feel free to explore, contribute, and innovate with us!
 
-## Installation Instructions
-Clone this repository
-Install dependencies & build:
+## Installation
+
+
+
+https://github.com/user-attachments/assets/ed7d2698-6f3a-42d6-81be-b845b40ba179
+
+
+
+## Installation Instructions (from source)
+- Clone this repository
+- Install dependencies & build:
+```
 pnpm i
 pnpm build
+```
 Usage
 After installation, you can:
 
