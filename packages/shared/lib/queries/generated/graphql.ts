@@ -1509,35 +1509,6 @@ export type Bytea_Comparison_Exp = {
 };
 
 /** columns and relationships of "cached_images.cached_image" */
-export type Cached_Images = {
-  __typename?: 'cached_images';
-  created_at: Scalars['timestamptz']['output'];
-  model?: Maybe<Scalars['String']['output']>;
-  original_url: Scalars['String']['output'];
-  safe: Scalars['Boolean']['output'];
-  score?: Maybe<Scalars['jsonb']['output']>;
-  url: Scalars['String']['output'];
-};
-
-/** columns and relationships of "cached_images.cached_image" */
-export type Cached_ImagesScoreArgs = {
-  path?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Boolean expression to filter rows from the table "cached_images.cached_image". All fields are combined with a logical 'AND'. */
-export type Cached_Images_Bool_Exp = {
-  _and?: InputMaybe<Array<Cached_Images_Bool_Exp>>;
-  _not?: InputMaybe<Cached_Images_Bool_Exp>;
-  _or?: InputMaybe<Array<Cached_Images_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-  model?: InputMaybe<String_Comparison_Exp>;
-  original_url?: InputMaybe<String_Comparison_Exp>;
-  safe?: InputMaybe<Boolean_Comparison_Exp>;
-  score?: InputMaybe<Jsonb_Comparison_Exp>;
-  url?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** columns and relationships of "cached_images.cached_image" */
 export type Cached_Images_Cached_Image = {
   __typename?: 'cached_images_cached_image';
   created_at: Scalars['timestamptz']['output'];
@@ -1602,50 +1573,6 @@ export type Cached_Images_Cached_Image_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Cached_Images_Cached_Image_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  model?: InputMaybe<Scalars['String']['input']>;
-  original_url?: InputMaybe<Scalars['String']['input']>;
-  safe?: InputMaybe<Scalars['Boolean']['input']>;
-  score?: InputMaybe<Scalars['jsonb']['input']>;
-  url?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Ordering options when selecting data from "cached_images.cached_image". */
-export type Cached_Images_Order_By = {
-  created_at?: InputMaybe<Order_By>;
-  model?: InputMaybe<Order_By>;
-  original_url?: InputMaybe<Order_By>;
-  safe?: InputMaybe<Order_By>;
-  score?: InputMaybe<Order_By>;
-  url?: InputMaybe<Order_By>;
-};
-
-/** select columns of table "cached_images.cached_image" */
-export enum Cached_Images_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Model = 'model',
-  /** column name */
-  OriginalUrl = 'original_url',
-  /** column name */
-  Safe = 'safe',
-  /** column name */
-  Score = 'score',
-  /** column name */
-  Url = 'url',
-}
-
-/** Streaming cursor of the table "cached_images" */
-export type Cached_Images_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Cached_Images_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Cached_Images_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   model?: InputMaybe<Scalars['String']['input']>;
   original_url?: InputMaybe<Scalars['String']['input']>;
@@ -3932,10 +3859,6 @@ export type Query_Root = {
   byte_object_aggregate: Byte_Object_Aggregate;
   /** fetch data from the table: "byte_object" using primary key columns */
   byte_object_by_pk?: Maybe<Byte_Object>;
-  /** fetch data from the table: "cached_images.cached_image" using primary key columns */
-  cached_image?: Maybe<Cached_Images>;
-  /** fetch data from the table: "cached_images.cached_image" */
-  cached_images: Array<Cached_Images>;
   /** fetch data from the table: "cached_images.cached_image" */
   cached_images_cached_image: Array<Cached_Images_Cached_Image>;
   /** fetch data from the table: "cached_images.cached_image" using primary key columns */
@@ -4210,18 +4133,6 @@ export type Query_RootByte_Object_AggregateArgs = {
 
 export type Query_RootByte_Object_By_PkArgs = {
   id: Scalars['String']['input'];
-};
-
-export type Query_RootCached_ImageArgs = {
-  url: Scalars['String']['input'];
-};
-
-export type Query_RootCached_ImagesArgs = {
-  distinct_on?: InputMaybe<Array<Cached_Images_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cached_Images_Order_By>>;
-  where?: InputMaybe<Cached_Images_Bool_Exp>;
 };
 
 export type Query_RootCached_Images_Cached_ImageArgs = {
@@ -7522,18 +7433,12 @@ export type Subscription_Root = {
   byte_object_by_pk?: Maybe<Byte_Object>;
   /** fetch data from the table in a streaming manner: "byte_object" */
   byte_object_stream: Array<Byte_Object>;
-  /** fetch data from the table: "cached_images.cached_image" using primary key columns */
-  cached_image?: Maybe<Cached_Images>;
-  /** fetch data from the table: "cached_images.cached_image" */
-  cached_images: Array<Cached_Images>;
   /** fetch data from the table: "cached_images.cached_image" */
   cached_images_cached_image: Array<Cached_Images_Cached_Image>;
   /** fetch data from the table: "cached_images.cached_image" using primary key columns */
   cached_images_cached_image_by_pk?: Maybe<Cached_Images_Cached_Image>;
   /** fetch data from the table in a streaming manner: "cached_images.cached_image" */
   cached_images_cached_image_stream: Array<Cached_Images_Cached_Image>;
-  /** fetch data from the table in a streaming manner: "cached_images.cached_image" */
-  cached_images_stream: Array<Cached_Images>;
   /** fetch data from the table: "caip10" using primary key columns */
   caip10?: Maybe<Caip10>;
   /** fetch aggregated fields from the table: "caip10" */
@@ -7906,18 +7811,6 @@ export type Subscription_RootByte_Object_StreamArgs = {
   where?: InputMaybe<Byte_Object_Bool_Exp>;
 };
 
-export type Subscription_RootCached_ImageArgs = {
-  url: Scalars['String']['input'];
-};
-
-export type Subscription_RootCached_ImagesArgs = {
-  distinct_on?: InputMaybe<Array<Cached_Images_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cached_Images_Order_By>>;
-  where?: InputMaybe<Cached_Images_Bool_Exp>;
-};
-
 export type Subscription_RootCached_Images_Cached_ImageArgs = {
   distinct_on?: InputMaybe<Array<Cached_Images_Cached_Image_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -7934,12 +7827,6 @@ export type Subscription_RootCached_Images_Cached_Image_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Cached_Images_Cached_Image_Stream_Cursor_Input>>;
   where?: InputMaybe<Cached_Images_Cached_Image_Bool_Exp>;
-};
-
-export type Subscription_RootCached_Images_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Cached_Images_Stream_Cursor_Input>>;
-  where?: InputMaybe<Cached_Images_Bool_Exp>;
 };
 
 export type Subscription_RootCaip10Args = {
