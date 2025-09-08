@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Spinner } from './Spinner';
-import { useMultiVault, useMutation, useStorage, useWaitForTransactionEvents } from '@extension/shared';
+import { toHex, useMultiVault, useMutation, useStorage, useWaitForTransactionEvents } from '@extension/shared';
 import { pinThingMutation } from '@extension/shared';
 import { currentTabStorage } from '@extension/storage';
 
@@ -16,7 +16,6 @@ export const AtomForm = ({ refetch }: { refetch: () => void }) => {
   const [label, setLabel] = useState(currentTab?.title || '');
   const [description, setDescription] = useState(currentTab?.description || '');
   const [image, setImage] = useState(currentTab?.image || '');
-  const [loading, setLoading] = useState(false);
 
   async function handleCreateAtom(): Promise<void> {
     if (!currentTab?.url) {
@@ -46,8 +45,10 @@ export const AtomForm = ({ refetch }: { refetch: () => void }) => {
 
     try {
       setProgressMessage('Creating atom...');
-      const { hash } = await multivault.createAtom({
-        uri: finalUri,
+      const atomCost = await multivault.read.getAtomCost();
+      const { minDeposit } = await multivault.read.getGeneralConfig();
+      const hash = await multivault.write.createAtoms([[toHex(finalUri)], [atomCost + minDeposit]], {
+        value: atomCost + minDeposit,
       });
 
       console.log(`Transaction hash: ${hash}`);

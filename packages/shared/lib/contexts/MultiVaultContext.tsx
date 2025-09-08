@@ -1,13 +1,32 @@
 import { createContext, useContext, ReactNode, useState, useEffect, useMemo } from 'react';
-import { Multivault, deployments } from '@0xintuition/protocol';
-import { createPublicClient, createWalletClient, custom, http, WalletClient } from 'viem';
-import { base, baseSepolia } from 'viem/chains';
+import {
+  createPublicClient,
+  createWalletClient,
+  custom,
+  getContract,
+  http,
+  WalletClient,
+  GetContractReturnType,
+  PublicClient,
+  Address,
+  Account,
+  Transport,
+  Chain,
+} from 'viem';
 import createMetaMaskProvider from 'metamask-extension-provider';
 import { currentChainStorage, currentAccountStorage } from '@extension/storage';
 import { useStorage } from '../hooks/useStorage';
+import { intuitionTestnet } from '../utils/viem';
+import { abi } from './abi';
+
+type MultiVaultContract = GetContractReturnType<
+  typeof abi,
+  { public: PublicClient; wallet: WalletClient<Transport, Chain, Account> },
+  Address
+>;
 
 type MultiVaultContextType = {
-  multivault: Multivault;
+  multivault: MultiVaultContract;
   client: WalletClient | undefined;
 };
 
@@ -18,7 +37,8 @@ export function MultiVaultProvider({ children }: { children: ReactNode }) {
   const account = useStorage(currentAccountStorage);
   const client = useMemo(() => {
     return createWalletClient({
-      chain: chainId === base.id ? base : baseSepolia,
+      // FIXME when mainnet is available
+      chain: chainId === intuitionTestnet.id ? intuitionTestnet : intuitionTestnet,
       account,
       transport: custom(createMetaMaskProvider()),
     });
@@ -33,20 +53,19 @@ export function MultiVaultProvider({ children }: { children: ReactNode }) {
 
   const publicClient = useMemo(() => {
     return createPublicClient({
-      chain: chainId === base.id ? base : baseSepolia,
+      // FIXME when mainnet is available
+      chain: chainId === intuitionTestnet.id ? intuitionTestnet : intuitionTestnet,
       transport: http(),
     });
   }, [chainId]);
 
-  const multivault = useMemo(() => {
-    return new Multivault(
-      {
-        publicClient,
-        walletClient: client,
-      } as any,
-      deployments[chainId],
-    );
-  }, [chainId, client, publicClient]);
+  const multivault: MultiVaultContract = useMemo(() => {
+    return getContract({
+      address: '0xB92EA1B47E4ABD0a520E9138BB59dBd1bC6C475B',
+      abi,
+      client: { public: publicClient, wallet: client },
+    });
+  }, [chainId, client, publicClient]) as any as MultiVaultContract;
 
   return <MultiVaultContext.Provider value={{ multivault, client }}>{children}</MultiVaultContext.Provider>;
 }

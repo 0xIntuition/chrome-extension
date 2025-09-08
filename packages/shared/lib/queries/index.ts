@@ -13,7 +13,7 @@ export const searchAtomsByUriQuery = gql(/* GraphQL */ `
         ]
       }
     ) {
-      id
+      term_id
       data
       type
       label
@@ -40,28 +40,29 @@ export const searchAtomsByUriQuery = gql(/* GraphQL */ `
           url
         }
       }
-      vault {
-        position_count
-        total_shares
-        current_share_price
-        myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {
-          shares
-          account_id
-        }
-        positions(order_by: { shares: desc }, limit: 5) {
-          shares
-          account {
-            id
-            type
-            image
-            label
+      term {
+        vault: vaults(where: { curve_id: { _eq: 1 } }) {
+          position_count
+          total_shares
+          current_share_price
+          myPosition: positions(limit: 1, where: { shares: { _gt: 0 }, account_id: { _eq: $address } }) {
+            shares
+            account_id
+          }
+          positions(where: { shares: { _gt: 0 } }, order_by: { shares: desc }, limit: 5) {
+            shares
+            account {
+              id
+              image
+              label
+            }
           }
         }
       }
       as_subject_triples {
-        id
+        term_id
         object {
-          id
+          term_id
           label
           emoji
           image
@@ -70,34 +71,38 @@ export const searchAtomsByUriQuery = gql(/* GraphQL */ `
           emoji
           label
           image
-          id
+          term_id
         }
-        counter_vault {
-          id
-          position_count
-          total_shares
-          current_share_price
-          myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {
-            shares
-            account_id
-          }
-          positions {
-            shares
-            account_id
+        counter_term {
+          vault: vaults(where: { curve_id: { _eq: 1 } }) {
+            term_id
+            position_count
+            total_shares
+            current_share_price
+            myPosition: positions(limit: 1, where: { shares: { _gt: 0 }, account_id: { _eq: $address } }) {
+              shares
+              account_id
+            }
+            positions(where: { shares: { _gt: 0 } }) {
+              shares
+              account_id
+            }
           }
         }
-        vault {
-          id
-          position_count
-          total_shares
-          current_share_price
-          myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {
-            shares
-            account_id
-          }
-          positions {
-            shares
-            account_id
+        term {
+          vault: vaults(where: { curve_id: { _eq: 1 } }) {
+            term_id
+            position_count
+            total_shares
+            current_share_price
+            myPosition: positions(limit: 1, where: { shares: { _gt: 0 }, account_id: { _eq: $address } }) {
+              shares
+              account_id
+            }
+            positions(where: { shares: { _gt: 0 } }) {
+              shares
+              account_id
+            }
           }
         }
       }
@@ -113,54 +118,65 @@ export const pinThingMutation = gql(/* GraphQL */ `
   }
 `);
 
+// FIXME
 export const getClaimsFromFollowingAboutSubject = gql(/* GraphQL */ `
-  query ClaimsFromFollowingAboutSubject($address: String!, $subjectId: numeric!) {
-    claims_from_following(args: { address: $address }, where: { subject_id: { _eq: $subjectId } }) {
+  query ClaimsFromFollowingAboutSubject($address: String!, $subjectId: String!) {
+    positions_from_following(
+      args: { address: $address }
+      where: { term: { triple: { subject_id: { _eq: $subjectId } } } }
+    ) {
       shares
-      counter_shares
-      triple {
-        id
-        vault_id
-        counter_vault_id
-        subject {
-          emoji
-          label
-          image
-          id
-        }
-        predicate {
-          emoji
-          label
-          image
-          id
-        }
-        object {
-          emoji
-          label
-          image
-          id
-        }
-        counter_vault {
-          id
-          position_count
-          total_shares
-          current_share_price
-          myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {
-            shares
-            account_id
+      term_id
+      term {
+        triple {
+          counter_term_id
+          subject {
+            emoji
+            label
+            image
+            term_id
           }
-        }
-        vault {
-          id
-          position_count
-          total_shares
-          current_share_price
-          myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {
-            shares
-            account_id
+          predicate {
+            emoji
+            label
+            image
+            term_id
+          }
+          object {
+            emoji
+            label
+            image
+            term_id
+          }
+          counter_term {
+            vaults {
+              term_id
+              curve_id
+              position_count
+              total_shares
+              current_share_price
+              myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {
+                shares
+                account_id
+              }
+            }
+          }
+          term {
+            vaults {
+              term_id
+              curve_id
+              position_count
+              total_shares
+              current_share_price
+              myPosition: positions(limit: 1, where: { account_id: { _eq: $address } }) {
+                shares
+                account_id
+              }
+            }
           }
         }
       }
+
       account {
         id
         label
@@ -172,15 +188,15 @@ export const getClaimsFromFollowingAboutSubject = gql(/* GraphQL */ `
 export const searchAtomsQuery = gql(/* GraphQL */ `
   query SearchAtoms($label: String!) {
     atoms(
-      order_by: { vault: { total_shares: desc } }
+      order_by: { term: { total_market_cap: desc } }
       limit: 30
       where: { type: { _in: ["Thing", "Person", "Organization"] }, label: { _ilike: $label } }
     ) {
-      id
+      term_id
       image
       label
-      vault {
-        total_shares
+      term {
+        total_market_cap
       }
     }
   }

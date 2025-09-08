@@ -1,6 +1,6 @@
 {
   "name": "@extension/shared",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "chrome extension - shared code",
   "private": true,
   "sideEffects": false,
@@ -24,11 +24,10 @@
     "@extension/tsconfig": "workspace:*"
   },
   "dependencies": {
-    "@extension/storage": "workspace:*",
-    "@0xintuition/protocol": "^0.1.4",
     "@apollo/client": "^3.12.6",
+    "@extension/storage": "workspace:*",
     "@tanstack/react-query": "^5.64.0",
     "metamask-extension-provider": "^5.0.0",
-    "viem": "^2.22.8"
+    "viem": "^2.37.3"
   }
 }

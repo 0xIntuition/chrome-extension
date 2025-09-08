@@ -7,6 +7,7 @@ import {
   type Chain,
   base,
   baseSepolia,
+  intuitionTestnet,
 } from '@extension/shared';
 import { currentAccountStorage, currentChainStorage } from '@extension/storage';
 import { useMultiVault, shortId } from '@extension/shared';
@@ -18,7 +19,7 @@ import { Label } from '@extension/ui';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@extension/ui';
 
 const Options = () => {
-  const [availableCains, setAvailableCains] = useState<Chain[]>([base, baseSepolia]);
+  const [availableCains, setAvailableCains] = useState<Chain[]>([intuitionTestnet]);
   const [addresses, setAddresses] = useState<Address[]>([]);
   const account = useStorage(currentAccountStorage);
   const chainId = useStorage(currentChainStorage);

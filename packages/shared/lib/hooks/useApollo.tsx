@@ -14,7 +14,8 @@ loadErrorMessages();
 export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
   const chainId = useStorage(currentChainStorage);
   const client = new ApolloClient({
-    uri: `https://prod.${chainId === base.id ? 'base' : 'base-sepolia'}.intuition-api.com/v1/graphql`,
+    // uri: `https://prod.${chainId === base.id ? 'base' : 'base-sepolia'}.intuition-api.com/v1/graphql`,
+    uri: `https://testnet.next.intuition.sh/v1/graphql`,
     cache: new InMemoryCache(),
   });
   return <ApolloProvider client={client}>{children}</ApolloProvider>;

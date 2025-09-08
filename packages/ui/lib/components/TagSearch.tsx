@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery } from '@extension/shared';
+import { Hex, useLazyQuery } from '@extension/shared';
 import { searchAtomsQuery } from '@extension/shared';
 
 interface TagSearchProps {
-  onSelected: (selectedTag: any, atomId: number) => void;
-  atomId: number;
+  onSelected: (selectedTag: any, atomId: Hex) => void;
+  atomId: Hex;
 }
 
 export const TagSearch: React.FC<TagSearchProps> = ({ onSelected, atomId }) => {
@@ -61,7 +61,7 @@ export const TagSearch: React.FC<TagSearchProps> = ({ onSelected, atomId }) => {
         <ul className="absolute z-10 w-full bg-slate-900 border border-slate-600  mt-1 max-h-20 overflow-y-auto rounded-lg">
           {searchResults.map(result => (
             <li
-              key={result.id}
+              key={result.term_id}
               onClick={() => handleSelect(result)}
               className="p-1 cursor-pointer hover:bg-slate-600 bg-slate-800">
               <div className="flex flex-row items-center space-x-2">
