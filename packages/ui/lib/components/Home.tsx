@@ -34,7 +34,7 @@ export const Home: React.FC = () => {
   });
   const openAtom = (id: Hex) => {
     // const url = currentChain === base.id ? 'https://app.i7n.xyz/a' : 'https://dev.i7n.xyz/a';
-    const url = 'https://www.staging.portal.intuition.systems/explore/atom';
+    const url = 'https://portal.intuition.systems/explore/atom';
     chrome.tabs.create({ url: `${url}/${id}` });
   };
 
